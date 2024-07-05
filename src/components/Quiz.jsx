@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import QUESTIONS from '../questions.js'
 import QuestionTimer from "./QuestionTimer.jsx";
@@ -10,9 +10,11 @@ const Quiz = () => {
   const activeQuestionIndex = userAnswers.length
   const quizIsComplete = activeQuestionIndex === QUESTIONS.length
 
-  function handleSelectAnswer(selectedAnswer) {
+  const handleSelectAnswer = useCallback(function handleSelectAnswer(selectedAnswer) {
     setUserAnswers(prevUserAnswers => [...prevUserAnswers, selectedAnswer])
-  }
+  })
+
+  const handleSkipAnser = useCallback(() => handleSelectAnswer(null), [handleSelectAnswer])
 
   if (quizIsComplete) {
     return (
